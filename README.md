@@ -1,7 +1,7 @@
 # SpectatorGUI
 
 This mod adds a few UI elements to the spectator screen to make it more interesting for Twitch viewers. It can be enabled/disabled with the ComputerInterface mod. 
-![](https://github.com/KyleTheScientist/GorillaSpectatorGUI/Demo.png)
+![](https://github.com/KyleTheScientist/GorillaSpectatorGUI/blob/master/Demo.png)
 
 
 ## Installation
