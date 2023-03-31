@@ -1,7 +1,8 @@
 ﻿using BepInEx;
+using Bepinject;
+using ComputerModExample;
 using System;
 using UnityEngine;
-using Utilla;
 
 namespace SpectatorGUI
 {
@@ -12,6 +13,11 @@ namespace SpectatorGUI
         private SpectatorGUI spectatorGUI;
         private bool initialized = false;
         private bool _enabled;
+
+        void Awake()
+        {
+            Zenjector.Install<MainInstaller>().OnProject();
+        }
 
         void Start()
         {

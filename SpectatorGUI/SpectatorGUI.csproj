@@ -33,11 +33,23 @@
     <Reference Include="BepInEx.Harmony">
       <HintPath>$(BepInExAssemblyPath)\BepInEx.Harmony.dll</HintPath>
     </Reference>
+    <Reference Include="Bepinject">
+      <HintPath>D:\Program Files\Oculus\Software\Software\another-axiom-gorilla-tag\BepInEx\plugins\Bepinject-Auros\Bepinject.dll</HintPath>
+    </Reference>
     <Reference Include="Cinemachine">
       <HintPath>$(GameAssemblyPath)\Cinemachine.dll</HintPath>
     </Reference>
     <Reference Include="clipper_library">
       <HintPath>$(GameAssemblyPath)\clipper_library.dll</HintPath>
+    </Reference>
+    <Reference Include="ComputerInterface">
+      <HintPath>D:\Program Files\Oculus\Software\Software\another-axiom-gorilla-tag\BepInEx\plugins\ComputerInterface\ComputerInterface.dll</HintPath>
+    </Reference>
+    <Reference Include="ComputerInterface.Commands">
+      <HintPath>D:\Program Files\Oculus\Software\Software\another-axiom-gorilla-tag\BepInEx\plugins\ComputerInterface\ComputerInterface.Commands.dll</HintPath>
+    </Reference>
+    <Reference Include="ComputerInterface.RoomBrowser">
+      <HintPath>D:\Program Files\Oculus\Software\Software\another-axiom-gorilla-tag\BepInEx\plugins\ComputerInterface\ComputerInterface.RoomBrowser.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Security">
       <HintPath>$(GameAssemblyPath)\Mono.Security.dll</HintPath>
@@ -293,6 +305,12 @@
     </Reference>
     <Reference Include="websocket-sharp">
       <HintPath>$(GameAssemblyPath)\websocket-sharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Zenject">
+      <HintPath>D:\Program Files\Oculus\Software\Software\another-axiom-gorilla-tag\BepInEx\plugins\Extenject\Zenject.dll</HintPath>
+    </Reference>
+    <Reference Include="Zenject-usage">
+      <HintPath>D:\Program Files\Oculus\Software\Software\another-axiom-gorilla-tag\BepInEx\plugins\Extenject\Zenject-usage.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>

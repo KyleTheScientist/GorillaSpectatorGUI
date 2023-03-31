@@ -7,6 +7,6 @@
     {
         public const string GUID = "com.kylethescientist.gorillatag.spectatorgui";
         public const string Name = "SpectatorGUI";
-        public const string Version = "1.0.0";
+        public const string Version = "1.1.0";
     }
 }

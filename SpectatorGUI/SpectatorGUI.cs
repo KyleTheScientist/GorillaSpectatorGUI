@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using Player = GorillaLocomotion.Player;
 using SpectatorGUI.Resources;
-
 namespace SpectatorGUI
 {
     class SpectatorGUI : MonoBehaviour
@@ -20,6 +19,7 @@ namespace SpectatorGUI
         public Tracker velocityAverager, stepTracker, stepAverager;
         public Sprite mutedSprite, speakingSprite;
         private bool wasLeftTouching, wasRightTouching;
+        private List<Text> statTexts;
 
         public void Awake()
         {
@@ -45,17 +45,17 @@ namespace SpectatorGUI
                 var player = Player.Instance.gameObject;
                 statsCanvas = CreateCanvas(display, 3);
                 {
-                    velText = CreateText("VELOCITY:", new Vector2(margin, 5), Vector2.zero, statsCanvas);
-                    velText.alignment = TextAnchor.LowerLeft;
+                    statTexts = new List<Text>();
+                    velText = CreateText("VELOCITY:", new Vector2(margin, margin), Vector2.zero, statsCanvas);
                     velocityAverager = player.AddComponent<Tracker>();
                     velocityAverager.window = 5f;
                     velocityAverager.collector += (_player) =>
                     {
                         return _player.currentVelocity.magnitude;
                     };
+                    statTexts.Add(velText);
 
-                    stepText = CreateText("STEPS PER SECOND:", new Vector2(margin, 15), Vector2.zero, statsCanvas);
-                    stepText.alignment = TextAnchor.LowerLeft;
+                    stepText = CreateText("STEPS PER SECOND:", new Vector2(margin, margin + 10), Vector2.zero, statsCanvas);
                     stepTracker = player.AddComponent<Tracker>();
                     stepTracker.window = 1f;
                     stepAverager = player.AddComponent<Tracker>();
@@ -64,6 +64,9 @@ namespace SpectatorGUI
                     {
                         return stepTracker.Count;
                     };
+
+                    statTexts.Add(stepText);
+                    SetStatTextPosition(0);
 
                     //debugText = CreateText("Hello", new Vector2(margin, -margin), Vector2.up, statsCanvas);
                     //debugText.alignment = TextAnchor.UpperLeft;
@@ -97,6 +100,58 @@ namespace SpectatorGUI
             }
             catch (Exception ex) { Console.WriteLine(ex.Message); Console.WriteLine(ex.StackTrace); }
 
+        }
+
+        public TextAnchor GetTextAnchor(Vector2 v)
+        {
+            string x, y;
+            x = v.x == 0 ? "Left" : "Right";
+            y = v.y == 0 ? "Lower" : "Upper";
+            return (TextAnchor)Enum.Parse(typeof(TextAnchor), y + x);
+        }
+
+        public Vector2 statsPivot = new Vector2();
+        public Vector2 statsOffsetMult = new Vector2(1, 1);
+        public TextAnchor SetStatTextPosition(int direction)
+        {
+            // 0, 1, 2, 3
+            // L, R, D, U
+
+            switch(direction)
+            {
+                case 0:
+                    statsPivot.x = 0;
+                    statsOffsetMult.x = 1; 
+                    break;
+                case 1:
+                    statsPivot.x = 1;
+                    statsOffsetMult.x = -1;
+                    break;
+                case 2:
+                    statsPivot.y = 0;
+                    statsOffsetMult.y = 1;
+                    break;
+                case 3:
+                    statsPivot.y = 1;
+                    statsOffsetMult.y = -1;
+                    break;
+            }
+
+            var anchor = GetTextAnchor(statsPivot);
+
+            foreach (Text text in statTexts)
+            {
+                float 
+                    x = Mathf.Abs(text.rectTransform.anchoredPosition.x) * statsOffsetMult.x,
+                    y = Mathf.Abs(text.rectTransform.anchoredPosition.y) * statsOffsetMult.y;
+
+                text.alignment = anchor;
+                text.rectTransform.anchorMin = statsPivot;
+                text.rectTransform.anchorMax = statsPivot;
+                text.rectTransform.pivot = statsPivot;
+                text.rectTransform.anchoredPosition = new Vector2(x, y);
+            }
+            return anchor;
         }
 
         void FixedUpdate()
@@ -200,7 +255,10 @@ namespace SpectatorGUI
             var camvas = canvasObj.AddComponent<Canvas>();
             camvas.renderMode = RenderMode.ScreenSpaceOverlay;
             camvas.targetDisplay = targetDisplay;
-            canvasObj.AddComponent<CanvasScaler>().scaleFactor = scaleFactor;
+
+            var scaler = canvasObj.AddComponent<CanvasScaler>();
+            scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+            scaler.referenceResolution = new Vector2(1280, 720) / scaleFactor;
             return camvas;
         }
 
