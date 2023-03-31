@@ -1,6 +1,8 @@
 # SpectatorGUI
 
-This mod adds a few UI elements to the spectator screen to make it more interesting for Twitch viewers. It can be enabled/disabled with the ComputerInterface mod. 
+This mod adds a few UI elements to the spectator screen to make it more interesting for Twitch viewers. 
+
+It can be enabled/disabled with the ComputerInterface mod, and the position of the velocity & steps per minute labels can be adjusted from the mod menu there as well.
 ![](https://github.com/KyleTheScientist/GorillaSpectatorGUI/blob/master/Demo.png)
 
 
