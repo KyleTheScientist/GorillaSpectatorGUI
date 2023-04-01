@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Player = GorillaLocomotion.Player;
 using SpectatorGUI.Resources;
+
 namespace SpectatorGUI
 {
     class SpectatorGUI : MonoBehaviour
@@ -20,6 +21,7 @@ namespace SpectatorGUI
         public Sprite mutedSprite, speakingSprite;
         private bool wasLeftTouching, wasRightTouching;
         private List<Text> statTexts;
+        private float min, max, minVal, maxVal;
 
         public void Awake()
         {
@@ -162,11 +164,26 @@ namespace SpectatorGUI
             try
             {
                 CheckIfPlayerTookAStep();
+                CalculateSize();
                 velText.text = $"VELOCITY: {velocityAverager.Average():f2}";
                 stepText.text = $"STEPS PER SECOND: {stepAverager.Average():f2}";
-                sizeText.text = $"SIZE: {Player.Instance.scale:f2}";
+                sizeText.text = $"SIZE: {Player.Instance.scale:f2}  [{min} = 1/2x | {max} = 2x]";
             }
             catch (Exception ex) { Console.WriteLine(ex.Message); Console.WriteLine(ex.StackTrace); }
+
+        }
+
+        void CalculateSize()
+        {
+            min = 0; max = 0;
+            minVal = 1; maxVal = 1;
+            float s;
+            for (int i = 0; i < 1000; i++)
+            {
+                s = AprilFools.GenerateSmoothTarget(i.ToString(), i.ToString(), i.ToString());
+                if (s < minVal) { min = i; minVal = s; }
+                if (s > maxVal) { max = i; maxVal = s; }
+            }
 
         }
 
