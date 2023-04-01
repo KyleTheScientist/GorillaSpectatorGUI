@@ -11,7 +11,7 @@ namespace SpectatorGUI
         public static SpectatorGUI Instance;
 
         public Canvas statsCanvas, playerCanvas;
-        public Text velText, stepText, debugText;
+        public Text velText, stepText, sizeText, debugText;
         public Player player;
         public List<PlayerLine> playerLines = new List<PlayerLine>();
         public Vector2 imageSize = new Vector2(10, 10);
@@ -66,6 +66,9 @@ namespace SpectatorGUI
                     };
 
                     statTexts.Add(stepText);
+
+                    sizeText = CreateText("SIZE: 1", new Vector2(margin, margin + 20), Vector2.zero, statsCanvas);
+                    statTexts.Add(velText);
                     SetStatTextPosition(0);
 
                     //debugText = CreateText("Hello", new Vector2(margin, -margin), Vector2.up, statsCanvas);
@@ -161,6 +164,7 @@ namespace SpectatorGUI
                 CheckIfPlayerTookAStep();
                 velText.text = $"VELOCITY: {velocityAverager.Average():f2}";
                 stepText.text = $"STEPS PER SECOND: {stepAverager.Average():f2}";
+                sizeText.text = $"SIZE: {Player.Instance.scale:f2}";
             }
             catch (Exception ex) { Console.WriteLine(ex.Message); Console.WriteLine(ex.StackTrace); }
 
